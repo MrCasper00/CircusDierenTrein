@@ -10,6 +10,7 @@
         }
         public bool AddAnimal(Animal animal)
         {
+            // If the wagon is empty always add the animal
             if (Animals.Count == 0)
             {
                 Animals.Add(animal);
@@ -17,50 +18,25 @@
                 return true;
             }
 
-            //Never have more than 1 carnivore in a wagon
-            foreach (Animal a in Animals)
+            // Check if the new animal can share a wagon with all the existing animals
+            foreach (Animal existingAnimal in Animals)
             {
-                if (a.IsCarnivore == true)
-                {
-                    if (animal.IsCarnivore == true)
-                    {
-                        return false;
-                    }
-                }
-            }
-            //Never have a carnivore in a wagon with a herbivore that weighs less
-            if (Animals[0].IsCarnivore == true)
-            {
-                if (Animals[0].Weight < animal.Weight)
-                {
-                    if (Weight + animal.Weight <= 10)
-                    {
-                        Animals.Add(animal);
-                        Weight += animal.Weight;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
-            else
-            //If the wagon only contains herbivores, check if the weight total weight is less than 10
-            {
-                if (Weight + animal.Weight <= 10)
-                {
-                    Animals.Add(animal);
-                    Weight += animal.Weight;
-                    return true;
-                }
-                else
+                if (!existingAnimal.CanShareWagonWith(animal))
                 {
                     return false;
                 }
             }
 
-            return false;
+            // Check if adding the new animal would exceed the weight limit
+            if (Weight + animal.Weight > 10)
+            {
+                return false;
+            }
+
+            // If all checks pass, add the animal to the wagon
+            Animals.Add(animal);
+            Weight += animal.Weight;
+            return true;
         }
     }
 }
