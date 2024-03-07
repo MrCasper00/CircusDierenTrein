@@ -2,8 +2,8 @@
 {
     public class Wagon
     {
-        public List<Animal> Animals;
-        public int Weight;
+        public List<Animal> Animals { get; private set; }
+        public int Weight { get; private set;}
         public Wagon()
         {
             Animals = new List<Animal>();

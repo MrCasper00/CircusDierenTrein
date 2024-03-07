@@ -8,7 +8,7 @@ namespace CircusLib
 {
     public class Train
     {
-        public List<Wagon> Wagons;
+        public List<Wagon> Wagons { get; private set; }
 
         public Train()
         {

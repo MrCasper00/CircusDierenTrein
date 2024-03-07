@@ -3,7 +3,7 @@ using System.CodeDom.Compiler;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using CircusLib;
-End:
+Start:
 Circus Circus   = new Circus();
 
 Console.WriteLine("Welcome to the circus! We are going to fill the train with animals.");
@@ -65,7 +65,7 @@ Console.WriteLine("Do you want to continue? (yes/no)");
 string answer = Console.ReadLine();
 if (answer == "yes")
 {
-    goto End;
+    goto Start;
 }
 else
 {

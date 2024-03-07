@@ -8,8 +8,8 @@ namespace CircusLib
 {
     public class Circus
     {
-        public List<Animal> Animals;
-        public Train Train;
+        public List<Animal> Animals { get; private set; }
+        public Train Train { get; private set; }
         public Circus()
         {
             Animals = new List<Animal>();
@@ -24,7 +24,7 @@ namespace CircusLib
         public void FindBest()
         {
             // Save a copy of the original list of animals
-            List<Animal> originalAnimals = new List<Animal>(Animals);
+            List<Animal> originalAnimals = Animals;
 
             // Try adding animals in descending order of size
             Animals = Animals.OrderByDescending(a => a.Size).ToList();
@@ -33,18 +33,18 @@ namespace CircusLib
 
             // Reset the train and the list of animals
             Train = new Train();
-            Animals = new List<Animal>(originalAnimals);
+            Animals = originalAnimals;
 
             // Try adding animals in ascending order of size
             Animals = Animals.OrderBy(a => a.Size).ToList();
             FillWagons();
             int wagonsAscending = Train.Wagons.Count;
 
-            // Reset the train and the list of animals one more time
+            // Reset the train and the list of animals again
             Train = new Train();
-            Animals = new List<Animal>(originalAnimals);
+            Animals = originalAnimals;
 
-            // Choose the order that resulted in the fewest wagons
+            // Choose the order that resulted in the least amount wagons
             if (wagonsDescending < wagonsAscending)
             {
                 Animals = Animals.OrderByDescending(a => a.Size).ToList();
@@ -61,6 +61,7 @@ namespace CircusLib
         public void FillWagons()
         {
             // First add all the carnivores to their own wagons since they will always need their own wagon
+            // And remove them from the list
             foreach (var animal in Animals.ToList())
             {
                 if (animal.IsCarnivore)
